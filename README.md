@@ -20,7 +20,7 @@ A bare directory path also works as a shortcut for `upload -w <dir>`.
 ```text
 <workspace>/
 ├── workshop.json   # metadata: title, description, visibility, changeNote, tags, dependencies, localizations
-├── image.png       # workshop preview image — REQUIRED, provide a real image (no placeholder shipped)
+├── image.png       # workshop preview image — optional (uploaded when present, like the official uploader)
 ├── content/        # the Civ6 mod directory itself (.modinfo + Binaries/ + Data/ + UI/ ...)
 └── mod_id.txt      # written after the first upload; NEVER delete (losing it loses the item ID)
 ```

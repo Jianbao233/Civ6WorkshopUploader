@@ -27,12 +27,12 @@ Civ6WorkshopUploader.exe <目录路径>                          # 快捷方式 
 ```text
 <workspace>/
 ├── workshop.json   # 元数据：title/description/visibility/changeNote/tags/dependencies/localizations
-├── image.png       # 工坊封面——必填，真实图片（PNG 方形 ≤1 MB）；工具不内置占位图
+├── image.png       # 工坊封面——可选（存在才上传，与官方上传器一致；建议提供真实图）
 ├── content/        # Civ6 mod 目录本身：.modinfo + 其引用的全部文件（Binaries/Data/UI/...）
 └── mod_id.txt      # 首次上传后自动写入；永久保留，删除即丢失条目 ID
 ```
 
-- 新建 workspace 用 `new -w`；把 mod 文件放入 `content/`；`image.png` 与 `workshop.json` 必须自行提供。
+- 新建 workspace 用 `new -w`；把 mod 文件放入 `content/`；`workshop.json` 必须自行提供；`image.png` 可选（缺失时跳过预览图上传，对齐官方上传器行为）。
 - **`mod_id.txt` 是条目的唯一身份凭证**：更新时上传器从它读取 ID，请勿删除，建议在外部台账冗余记录。
 
 ## AI 接管完整发布流程

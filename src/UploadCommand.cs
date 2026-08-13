@@ -18,11 +18,6 @@ public static class UploadCommand
 
         // First, do some validation of what is in the directory.
         FileInfo imageFileInfo = new FileInfo(Path.Combine(workspaceDirectory.FullName, "image.png"));
-        if (!imageFileInfo.Exists)
-        {
-            Log.Error("There is no file named image.png in the workspace! Provide a real preview image (PNG, ideally square, <= 1 MB) before uploading — the tool no longer ships a placeholder.");
-            return 1;
-        }
 
         DirectoryInfo contentDirectoryInfo = new DirectoryInfo(Path.Combine(workspaceDirectory.FullName, "content"));
         if (!contentDirectoryInfo.Exists)
@@ -194,9 +189,18 @@ public static class UploadCommand
             Log.Warn("Failed to upload content!");
         }
 
-        if (!SteamUGC.SetItemPreview(updateHandle, imageFileInfo.FullName))
+        // The preview image is optional: Civ6's official uploader uploads one only when the
+        // user picked a file ("Skipping preview image because none was specified."). Mirror that.
+        if (imageFileInfo.Exists)
         {
-            Log.Warn("Failed to set preview image!");
+            if (!SteamUGC.SetItemPreview(updateHandle, imageFileInfo.FullName))
+            {
+                Log.Warn("Failed to set preview image!");
+            }
+        }
+        else
+        {
+            Log.Info("Skipping preview image because none was specified.");
         }
 
         SteamAPICall_t updateItemCall = SteamUGC.SubmitItemUpdate(updateHandle, modConfig.changeNote ?? "");
