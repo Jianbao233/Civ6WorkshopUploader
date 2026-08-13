@@ -7,7 +7,9 @@
                       For Civ6 this is the mod directory itself: `<ModName>.modinfo`,
                       `Binaries/`, `Data/`, `UI/`, `Script/`, `Text/` etc., exactly as the
                       game loads it from `My Games/Sid Meier's Civilization VI/Mods/<ModName>`.
-* `image.png`     -- The image shown in the Steam Workshop. Replace with your own!
+* `image.png`     -- The workshop preview image. **Required**: provide a real image
+                      (PNG, ideally square, <= 1 MB) before the first upload. The tool
+                      does not ship a placeholder image.
 * `mod_id.txt`    -- Created automatically after the first upload. NEVER delete it.
 * `README.md`     -- This readme document
 

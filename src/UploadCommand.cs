@@ -20,7 +20,7 @@ public static class UploadCommand
         FileInfo imageFileInfo = new FileInfo(Path.Combine(workspaceDirectory.FullName, "image.png"));
         if (!imageFileInfo.Exists)
         {
-            Log.Error("There is no file named image.png in the workspace!");
+            Log.Error("There is no file named image.png in the workspace! Provide a real preview image (PNG, ideally square, <= 1 MB) before uploading — the tool no longer ships a placeholder.");
             return 1;
         }
 
