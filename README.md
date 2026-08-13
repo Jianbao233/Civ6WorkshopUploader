@@ -44,6 +44,11 @@ Linux/macOS are supported by the project (conditional steam library copying); on
 
 The tool is deterministic and non-interactive: one command per action, exit code 0 on success, logs to `civ6-uploader.log` beside the executable. An agent can therefore fully own the publish workflow — building `content/` from staging, running `validate`, then `upload -w <workspace>` — and update the workshop ledger afterwards.
 
+See also:
+
+- [`docs/workflow.md`](docs/workflow.md) — a worked example of an AI-driven publish workflow (仅供参考 — adapt to your own habits and project layout).
+- [`docs/ledger-template.md`](docs/ledger-template.md) — a minimal markdown ledger for tracking workshop items (仅供参考).
+
 ## License
 
 MIT
