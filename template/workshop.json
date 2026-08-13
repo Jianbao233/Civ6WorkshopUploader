@@ -1,0 +1,8 @@
+{
+  "title": "Civ6ModTemplate",
+  "description": "Template for new Civ6 mods.",
+  "visibility": "private",
+  "changeNote": "None",
+  "tags": [],
+  "dependencies": []
+}

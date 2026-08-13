@@ -1,0 +1,59 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <PublishSingleFile>true</PublishSingleFile>
+        <RootNamespace>Civ6WorkshopUploader</RootNamespace>
+        <AssemblyName>Civ6WorkshopUploader</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Steamworks.NET" Version="15.0.1" />
+      <PackageReference Include="System.CommandLine" Version="3.0.0-preview.4.26230.115" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="template\**\*">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <ContentWithTargetPath Include="steam\steam_appid.txt">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <TargetPath>steam_appid.txt</TargetPath>
+        </ContentWithTargetPath>
+    </ItemGroup>
+
+    <ItemGroup Condition="$(RuntimeIdentifier.StartsWith('win')) or $(RuntimeIdentifier) == ''">
+        <ContentWithTargetPath Include="steam\steam_api64.dll">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <TargetPath>steam_api64.dll</TargetPath>
+        </ContentWithTargetPath>
+    </ItemGroup>
+
+    <ItemGroup Condition="$(RuntimeIdentifier.StartsWith('linux'))">
+        <ContentWithTargetPath Include="steam\libsteam_api.so">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <TargetPath>libsteam_api.so</TargetPath>
+        </ContentWithTargetPath>
+    </ItemGroup>
+
+    <ItemGroup Condition="$(RuntimeIdentifier.StartsWith('osx'))">
+        <ContentWithTargetPath Include="steam\libsteam_api.dylib">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <TargetPath>libsteam_api.dylib</TargetPath>
+        </ContentWithTargetPath>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Steamworks.NET">
+        <HintPath>steam\Steamworks.NET.dll</HintPath>
+      </Reference>
+      <!-- Steamworks.NET dispatches CallResults by reflecting over CallbackIdentityAttribute on the
+           result structs and has no trim annotations, so PublishTrimmed would strip that surface and
+           CallResults would never fire. Root the assembly to keep it intact when trimming. -->
+      <TrimmerRootAssembly Include="Steamworks.NET" />
+    </ItemGroup>
+
+</Project>
