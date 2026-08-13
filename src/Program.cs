@@ -84,67 +84,11 @@ public static class Program
             validateCommand.Options.Add(validateWorkspaceOption);
             validateCommand.SetAction(p => ValidateCommand.Validate(p.GetRequiredValue(validateWorkspaceOption)));
 
-            Option<ulong?> commentsItemIdOption = new Option<ulong?>("--id", "-i")
-            {
-                Description =
-                    "The ID of the workshop item whose comments to fetch. If not specified, -w reads mod_id.txt from the workspace."
-            };
-
-            Option<DirectoryInfo?> commentsWorkspaceOption = new("--workspace", "-w")
-            {
-                Description = "The workspace directory to read mod_id.txt from (alternative to -i)."
-            };
-
-            Option<string?> sinceOption = new("--since")
-            {
-                Description = "Only fetch comments from this date onwards (YYYY-MM-DD, UTC)."
-            };
-
-            Option<string?> untilOption = new("--until")
-            {
-                Description = "Only fetch comments up to this date (YYYY-MM-DD, UTC)."
-            };
-
-            Option<FileInfo?> commentsOutputOption = new("--output", "-o")
-            {
-                Description = "Write the fetched comments as JSON to this file. Without it, a one-line-per-comment summary is printed."
-            };
-
-            Option<string?> cookieOption = new("--cookie")
-            {
-                Description =
-                    "Optional steamcommunity.com Cookie header for logged-in sessions (required when Steam blocks anonymous access: 'This profile is private.')."
-            };
-
-            Option<string?> proxyOption = new("--proxy")
-            {
-                Description = "Optional HTTP proxy, e.g. http://127.0.0.1:7897. Defaults to the HTTPS_PROXY/HTTP_PROXY environment variables, then the system proxy."
-            };
-
-            Command commentsCommand = new("comments",
-                "Fetch Steam Workshop comments for an item, optionally within a date range. Pure HTTP, no Steam login needed for public items.");
-            commentsCommand.Options.Add(commentsItemIdOption);
-            commentsCommand.Options.Add(commentsWorkspaceOption);
-            commentsCommand.Options.Add(sinceOption);
-            commentsCommand.Options.Add(untilOption);
-            commentsCommand.Options.Add(commentsOutputOption);
-            commentsCommand.Options.Add(cookieOption);
-            commentsCommand.Options.Add(proxyOption);
-            commentsCommand.SetAction(p => CommentsCommand.GetComments(
-                p.GetValue(commentsWorkspaceOption),
-                p.GetValue(commentsItemIdOption),
-                p.GetValue(sinceOption),
-                p.GetValue(untilOption),
-                p.GetValue(commentsOutputOption)?.FullName,
-                p.GetValue(cookieOption),
-                p.GetValue(proxyOption)));
-
             RootCommand rootCommand = new("Utility for creating and updating Civ6 Steam Workshop mods.");
             rootCommand.Subcommands.Add(newCommand);
             rootCommand.Subcommands.Add(uploadCommand);
             rootCommand.Subcommands.Add(removeCommand);
             rootCommand.Subcommands.Add(validateCommand);
-            rootCommand.Subcommands.Add(commentsCommand);
 
             ParseResult parseResult = rootCommand.Parse(args);
             return parseResult.Invoke();

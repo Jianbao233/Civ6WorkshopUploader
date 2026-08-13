@@ -11,8 +11,6 @@ Civ6WorkshopUploader.exe new -w <dir>              Create a new workspace from t
 Civ6WorkshopUploader.exe upload -w <dir> [-i <id>] Upload a new item or update an existing one
 Civ6WorkshopUploader.exe validate -w <dir>         Advisory pre-upload check (modinfo + referenced files)
 Civ6WorkshopUploader.exe remove -w <dir> [-i <id>] Delete an item from the workshop
-Civ6WorkshopUploader.exe comments -i <id>|-w <dir> [--since YYYY-MM-DD] [--until YYYY-MM-DD] [-o out.json] [--cookie "..."] [--proxy url]
-                                                  Fetch workshop comments (pure HTTP, no Steam login for public items)
 ```
 
 A bare directory path also works as a shortcut for `upload -w <dir>`.
@@ -32,17 +30,6 @@ Key facts:
 - Items are created under the Civ6 app id `289070`; the tool itself registers as the Civ6 SDK tool depot (`404350`, see `steam/steam_appid.txt`).
 - The primary update always writes the `english` language variant, independent of your Steam client language. Additional languages go through the `localizations` array in `workshop.json` and are applied as cheap metadata-only updates.
 - `SteamAPI.Init` requires the Steam client to be running and logged in, with an account that owns Civ6.
-- `comments` fetches workshop comments over plain HTTP (no Steam init). Use `--since`/`--until` to restrict to a date range and `-o` to export JSON. Steam may block anonymous/datacenter egress on this endpoint ("This profile is private.") — pass `--cookie` with a logged-in steamcommunity session to work around it. See `AGENTS.md` for the full agent-facing contract.
-
-## Workshop feedback triage
-
-`comments` is designed for daily batch triage: keep a ledger of your items, then run e.g.
-
-```powershell
-Civ6WorkshopUploader.exe comments -w <workspace> --since 2026-08-01 -o comments.json
-```
-
-Each comment carries `comment_id`, `author`, `author_steamid`, `timestamp` (unix, UTC) and `body`, so an agent can deduplicate, bucket by date, and prioritize fixes.
 
 ## Build
 
