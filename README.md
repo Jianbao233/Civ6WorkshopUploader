@@ -1,5 +1,7 @@
 # Civ6WorkshopUploader
 
+> **English** | [简体中文](README.zh-CN.md)
+
 CLI tool for creating, updating and removing **Sid Meier's Civilization VI** Steam Workshop items, designed so an AI agent (or a human) can drive the whole publish/maintenance flow from the command line.
 
 Structure reference: [megacrit/sts2-mod-uploader](https://github.com/megacrit/sts2-mod-uploader). This project is an independent implementation for Civ6, not a copy of their code.
